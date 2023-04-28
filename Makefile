@@ -20,7 +20,7 @@ $(BUILD_DIR)/main.o: $(BUILD_DIR)/main.casm $(BUILD_DIR)
 	ca65 -t none $(BUILD_DIR)/main.casm -o $(BUILD_DIR)/main.o
 
 $(BUILD_DIR)/hangout.bin: $(BUILD_DIR) $(BUILD_DIR)/main.o
-	ld65 -m $(BUILD_DIR)/hangout.txt -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/glyph.lib $(DCLIB)/qgraph.lib $(DCLIB)/sprites.lib $(DCLIB)/system.lib $(DCLIB)/durango.lib $(DCLIB)/psv.lib -o $(BUILD_DIR)/hangout.bin	
+	ld65 -m $(BUILD_DIR)/hangout.txt -C $(CFG) $(BUILD_DIR)/main.o $(DCLIB)/glyph.lib $(DCLIB)/qgraph.lib $(DCLIB)/sprites.lib $(DCLIB)/system.lib $(DCLIB)/durango.lib $(DCLIB)/psv.lib $(DCLIB)/glyph.lib -o $(BUILD_DIR)/hangout.bin	
 
 hangout.dux: $(BUILD_DIR)/hangout.bin $(BUILD_DIR)
 	java -jar ${RESCOMP} -m SIGNER -n $$(git log -1 | head -1 | sed 's/commit //' | cut -c1-8) -t hangout -d "Pesca todos los peces que puedas. ¡Ojo al color del cebo!" -i $(BUILD_DIR)/hangout.bin -o hangout.dux
