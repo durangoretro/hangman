@@ -16,13 +16,26 @@
 
 int main(void);
 
+void load_word(void);
+
+const char word[13] =   {'R','R','I','N','O','C','E','R','O','N','T','E',0};
+const char secret[13] = {'_','_','_','_','_','_','_','_','_','_','_','_',0};
 
 int main() {
     load_background(hang10);
     clrscr();
-    printStr(10, 110, font, WHITE, BLACK, "A________");
+    
+    
+    
+    printStr(10, 110, font, WHITE, BLACK, (char*)secret);
     
     while(1) {
     };
+    
+    return 0;
+}
+
+void load_word() {
+    
 }
 
