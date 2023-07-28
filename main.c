@@ -28,7 +28,33 @@ char current;
 char fail_count;
 
 int main() {
-    init_game();
+	int seed;
+	char i, ran;
+	clear_screen();
+	printStr(20, 10, font, WHITE, BLACK, "HANGMAN");
+	printStr(10, 110, font, WHITE, BLACK, "Press start...");
+	
+    waitStart();
+	seed=get_time();
+	random_init(seed);
+	consoleLogStr("Random seed: $");
+	consoleLogHex16(seed);
+	consoleLogStr(" (");
+	consoleLogInt(seed);
+	consoleLogStr(")\n-----------------\n");
+
+	do{
+		ran = random();
+		consoleLogHex16(ran);
+		consoleLogStr("$");
+		consoleLogStr(" (");
+		consoleLogInt(ran);
+		consoleLogStr(")\n");
+		i++;
+	}while(i<10);
+
+
+	init_game();
     
     printStr(10, 110, font, WHITE, BLACK, (char*)secret);
     
