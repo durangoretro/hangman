@@ -31,7 +31,10 @@ $(BUILD_DIR)/hang09.h: hang09.png $(BUILD_DIR)
 $(BUILD_DIR)/hang10.h: hang10.png $(BUILD_DIR)
 	java -jar ${RESCOMP} -n hang10 -m BACKGROUND -i hang10.png -o $(BUILD_DIR)/hang10.h
 	
-$(BUILD_DIR)/main.casm: $(SOURCE_DIR)/main.c $(BUILD_DIR) $(BUILD_DIR)/hang01.h $(BUILD_DIR)/hang02.h $(BUILD_DIR)/hang03.h $(BUILD_DIR)/hang04.h $(BUILD_DIR)/hang05.h $(BUILD_DIR)/hang06.h $(BUILD_DIR)/hang07.h $(BUILD_DIR)/hang08.h $(BUILD_DIR)/hang09.h $(BUILD_DIR)/hang10.h
+$(BUILD_DIR)/dic.h: dic.txt $(BUILD_DIR)
+	java -jar ${RESCOMP} -n words -m WORDS -i dic.txt -o $(BUILD_DIR)/dic.h
+	
+$(BUILD_DIR)/main.casm: $(SOURCE_DIR)/main.c $(BUILD_DIR) $(BUILD_DIR)/hang01.h $(BUILD_DIR)/hang02.h $(BUILD_DIR)/hang03.h $(BUILD_DIR)/hang04.h $(BUILD_DIR)/hang05.h $(BUILD_DIR)/hang06.h $(BUILD_DIR)/hang07.h $(BUILD_DIR)/hang08.h $(BUILD_DIR)/hang09.h $(BUILD_DIR)/hang10.h $(BUILD_DIR)/dic.h
 	cc65 -I $(DCINC) $(SOURCE_DIR)/main.c -t none --cpu 6502 -o $(BUILD_DIR)/main.casm
 
 $(BUILD_DIR)/main.o: $(BUILD_DIR)/main.casm $(BUILD_DIR)

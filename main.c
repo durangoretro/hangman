@@ -13,6 +13,7 @@
 #include "bin/hang08.h"
 #include "bin/hang09.h"
 #include "bin/hang10.h"
+#include "bin/dic.h"
 
 int main(void);
 
