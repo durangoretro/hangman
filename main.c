@@ -22,15 +22,14 @@ void update_game(void);
 void init_game(void);
 void fail(void);
 
-const char word[12] =   {'R','I','N','O','C','E','R','O','N','T','E',0};
-char len = 11;
-char secret[12] = {'_','_','_','_','_','_','_','_','_','_','_',0};
+char* word;
+char len;
+char secret[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 char current;
 char fail_count;
 
 int main() {
 	int seed;
-	char i, ran;
 	clear_screen();
 	printStr(20, 10, font, WHITE, BLACK, "HANGMAN");
 	printStr(10, 110, font, WHITE, BLACK, "Press start...");
@@ -38,23 +37,7 @@ int main() {
     waitStart();
 	seed=get_time();
 	random_init(seed);
-	consoleLogStr("Random seed: $");
-	consoleLogHex16(seed);
-	consoleLogStr(" (");
-	consoleLogInt(seed);
-	consoleLogStr(")\n-----------------\n");
-
-	do{
-		ran = random();
-		consoleLogHex16(ran);
-		consoleLogStr("$");
-		consoleLogStr(" (");
-		consoleLogInt(ran);
-		consoleLogStr(")\n");
-		i++;
-	}while(i<10);
-
-
+	
 	init_game();
     
     printStr(10, 110, font, WHITE, BLACK, (char*)secret);
@@ -69,10 +52,25 @@ int main() {
 void init_game() {
     fail_count=0;
     clear_screen();
+    load_word();
 }
 
 void load_word() {
+    char i, ran, current;
     
+    // Search random word
+    ran = random();
+    word=(char*) words;
+    
+    // Initialize secret
+    i=0;
+    do {
+        current=word[i];
+        if(current != 0) {
+            secret[i]='_';
+        }
+        i++;
+    } while(current != 0);
 }
 
 void fail() {
@@ -128,7 +126,7 @@ void update_game() {
     if(found==0) {
         fail();
     }
-        
+    
     printStr(10, 110, font, WHITE, BLACK, (char*)secret);
 }
 
