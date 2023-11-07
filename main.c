@@ -21,6 +21,7 @@ void load_word(void);
 void update_game(void);
 void init_game(void);
 void fail(void);
+void next_word(void);
 
 char* word;
 char len;
@@ -52,6 +53,7 @@ int main() {
 void init_game() {
     fail_count=0;
     clear_screen();
+    word=(char*) words;
     load_word();
 }
 
@@ -60,7 +62,11 @@ void load_word() {
     
     // Search random word
     ran = random();
-    word=(char*) words;
+    i=0;
+    do {
+        next_word();
+        i++;
+    } while(i<ran);
     
     // Initialize secret
     i=0;
@@ -130,3 +136,12 @@ void update_game() {
     printStr(10, 110, font, WHITE, BLACK, (char*)secret);
 }
 
+void next_word(void) {
+    do {
+        word++;
+    } while(word[0]!=0);
+    word++;
+    if(word[0]<32) {
+        word=(char*) words;
+    }
+}
