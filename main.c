@@ -2,7 +2,7 @@
 #include <sprites.h>
 #include <glyph.h>
 #include <font.h>
-#include <psv.h>
+#include <qgraph.h>
 #include "bin/hang01.h"
 #include "bin/hang02.h"
 #include "bin/hang03.h"
@@ -17,13 +17,14 @@
 
 int main(void);
 
-void load_word(void);
+void load_myword(void);
 void update_game(void);
 void init_game(void);
 void fail(void);
-void next_word(void);
+void next_myword(void);
+void success(void);
 
-char* word;
+char* myword;
 char len;
 char secret[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 char current;
@@ -36,6 +37,7 @@ int main() {
     clrscr();
 	printStr(80, 10, font, WHITE, BLACK, "AHORCADO");
 	printStr(10, 110, font, WHITE, BLACK, "Presiona enter...");
+    success();
 	
     waitStart();
 	seed=get_time();
@@ -55,25 +57,25 @@ int main() {
 void init_game() {
     fail_count=0;
     clear_screen();
-    word=(char*) words;
-    load_word();
+    myword=(char*) dictionary;
+    load_myword();
 }
 
-void load_word() {
+void load_myword() {
     char i, ran, current;
     
-    // Search random word
+    // Search random myword
     ran = random();
     i=0;
     do {
-        next_word();
+        next_myword();
         i++;
     } while(i<ran);
     
     // Initialize secret
     i=0;
     do {
-        current=word[i];
+        current=myword[i];
         if(current != 0) {
             secret[i]='_';
         }
@@ -122,10 +124,11 @@ void update_game() {
     search = getchar();
     i=0;
     found = 0;
+    // Put matching letters
     do {
-        current=word[i];
+        current=myword[i];
         if(search == current) {
-            secret[i]=word[i];
+            secret[i]=myword[i];
             found = 1;
         }
         i++;
@@ -135,15 +138,40 @@ void update_game() {
         fail();
     }
     
+    // Check if myword is found
+    i=0;
+    found = 1;
+    do {
+        if(secret[i]=='_') {
+            found = 0;
+        }
+        i++;
+    } while(secret[i] != 0);
+    
+    if(found==1) {
+        success();
+    }
+        
     printStr(10, 110, font, WHITE, BLACK, (char*)secret);
 }
 
-void next_word(void) {
+void next_myword(void) {
     do {
-        word++;
-    } while(word[0]!=0);
-    word++;
-    if(word[0]<32) {
-        word=(char*) words;
+        myword++;
+    } while(myword[0]!=0);
+    myword++;
+    if(myword[0]<32) {
+        myword=(char*) dictionary;
     }
+}
+
+void success(void) {
+    rectangle rect;
+    rect.x=20;
+    rect.y=30;
+    rect.width=80;
+    rect.height=30;
+    rect.color=RED;
+    drawRect(&rect);
+    printStr(30, 40, font, WHITE, BLACK, "!TU GANAS!");
 }
