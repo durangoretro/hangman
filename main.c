@@ -34,8 +34,8 @@ int main() {
 	clear_screen();
     load_background(hang10);
     clrscr();
-	printStr(80, 10, font, WHITE, BLACK, "HANGMAN");
-	printStr(10, 110, font, WHITE, BLACK, "Press enter...");
+	printStr(80, 10, font, WHITE, BLACK, "AHORCADO");
+	printStr(10, 110, font, WHITE, BLACK, "Presiona enter...");
 	
     waitStart();
 	seed=get_time();
