@@ -17,7 +17,7 @@
 
 int main(void);
 
-void load_myword(void);
+void load_word(void);
 void update_game(void);
 void init_game(void);
 void fail(void);
@@ -37,7 +37,6 @@ int main() {
     clrscr();
 	printStr(80, 10, font, WHITE, BLACK, "AHORCADO");
 	printStr(10, 110, font, WHITE, BLACK, "Presiona enter...");
-    success();
 	
     waitStart();
 	seed=get_time();
@@ -58,10 +57,10 @@ void init_game() {
     fail_count=0;
     clear_screen();
     myword=(char*) dictionary;
-    load_myword();
+    load_word();
 }
 
-void load_myword() {
+void load_word() {
     char i, ran, current;
     
     // Search random myword
@@ -150,6 +149,8 @@ void update_game() {
     
     if(found==1) {
         success();
+        waitStart();
+        load_word();
     }
         
     printStr(10, 110, font, WHITE, BLACK, (char*)secret);
@@ -167,11 +168,21 @@ void next_myword(void) {
 
 void success(void) {
     rectangle rect;
+    
+    rect.x=18;
+    rect.y=28;
+    rect.width=84;
+    rect.height=34;
+    rect.color=WHITE;
+    drawRect(&rect);
+    
     rect.x=20;
     rect.y=30;
     rect.width=80;
     rect.height=30;
-    rect.color=RED;
+    rect.color=BLACK;
     drawRect(&rect);
+        
     printStr(30, 40, font, WHITE, BLACK, "!TU GANAS!");
+    printStr(10, 110, font, WHITE, BLACK, "Presiona enter...");
 }
