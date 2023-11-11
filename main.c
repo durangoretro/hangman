@@ -80,6 +80,7 @@ void load_word() {
         }
         i++;
     } while(current != 0);
+    secret[i]=0;
 }
 
 void fail() {
@@ -150,6 +151,8 @@ void update_game() {
     if(found==1) {
         success();
         waitStart();
+        fail_count=0;
+        clear_screen();
         load_word();
     }
         
