@@ -32,8 +32,10 @@ char fail_count;
 int main() {
 	int seed;
 	clear_screen();
-	printStr(20, 10, font, WHITE, BLACK, "HANGMAN");
-	printStr(10, 110, font, WHITE, BLACK, "Press start...");
+    load_background(hang10);
+    clrscr();
+	printStr(80, 10, font, WHITE, BLACK, "HANGMAN");
+	printStr(10, 110, font, WHITE, BLACK, "Press enter...");
 	
     waitStart();
 	seed=get_time();
