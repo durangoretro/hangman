@@ -23,6 +23,7 @@ void init_game(void);
 void fail(void);
 void next_myword(void);
 void success(void);
+void gameover(void);
 
 char* myword;
 char len;
@@ -148,6 +149,16 @@ void update_game() {
         i++;
     } while(secret[i] != 0);
     
+    // Check if game over
+    if(fail_count==10) {
+        printStr(10, 110, font, WHITE, BLACK, (char*)myword);
+        gameover();
+        waitStart();
+        fail_count=0;
+        clear_screen();
+        load_word();
+    }
+    
     if(found==1) {
         success();
         waitStart();
@@ -188,4 +199,25 @@ void success(void) {
         
     printStr(30, 40, font, WHITE, BLACK, "!TU GANAS!");
     printStr(10, 110, font, WHITE, BLACK, "Presiona enter...");
+}
+
+void gameover(void) {
+    rectangle rect;
+    
+    rect.x=18;
+    rect.y=28;
+    rect.width=84;
+    rect.height=34;
+    rect.color=WHITE;
+    drawRect(&rect);
+    
+    rect.x=20;
+    rect.y=30;
+    rect.width=80;
+    rect.height=30;
+    rect.color=BLACK;
+    drawRect(&rect);
+        
+    printStr(22, 40, font, WHITE, BLACK, "!HAS PERDIDO!");
+    printStr(10, 100, font, WHITE, BLACK, "Presiona enter...");
 }
