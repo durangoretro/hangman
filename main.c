@@ -37,7 +37,7 @@ int main() {
     load_background(hang10);
     clrscr();
 	printStr(80, 10, font, WHITE, BLACK, "AHORCADO");
-	printStr(10, 110, font, WHITE, BLACK, "Presiona enter...");
+	printStr(10, 119, font, WHITE, BLACK, "Presiona enter...");
 	
     waitStart();
 	seed=get_time();
@@ -159,15 +159,16 @@ void update_game() {
         load_word();
     }
     
+    printStr(10, 110, font, WHITE, BLACK, (char*)secret);
+    
     if(found==1) {
         success();
         waitStart();
         fail_count=0;
         clear_screen();
         load_word();
+        printStr(10, 110, font, WHITE, BLACK, (char*)secret);
     }
-        
-    printStr(10, 110, font, WHITE, BLACK, (char*)secret);
 }
 
 void next_myword(void) {
@@ -198,7 +199,7 @@ void success(void) {
     drawRect(&rect);
         
     printStr(30, 40, font, WHITE, BLACK, "!TU GANAS!");
-    printStr(10, 110, font, WHITE, BLACK, "Presiona enter...");
+    printStr(10, 119, font, WHITE, BLACK, "Presiona enter...");
 }
 
 void gameover(void) {
@@ -219,5 +220,5 @@ void gameover(void) {
     drawRect(&rect);
         
     printStr(22, 40, font, WHITE, BLACK, "!HAS PERDIDO!");
-    printStr(10, 100, font, WHITE, BLACK, "Presiona enter...");
+    printStr(10, 119, font, WHITE, BLACK, "Presiona enter...");
 }
